@@ -1,0 +1,46 @@
+ingestion:
+  output-folder: "./data/before-compute/"
+  data-location: "./data/"
+  data:
+    - name: clinical_trials
+      files:
+        - file-name: clinical_trials.csv
+          extension: csv
+      cols:
+        - name: id
+          type: str
+        - name: scientific_title
+          type: str
+          alias: title
+        - name: date
+          type: date
+        - name: journal
+          type: str
+    - name: drugs
+      files:
+        - file-name: drugs.csv
+          extension: csv
+      cols:
+        - name: atccode
+          type: str
+        - name: drug
+          type: str
+    - name: pubmed
+      files:
+        - file-name: pubmed.csv
+          extension: csv
+        - file-name: pubmed.json
+          extension: json
+      cols:
+        - name: id
+          type: str
+        - name: title
+          type: str
+        - name: date
+          type: date
+        - name: journal
+          type: str
+export:
+  path: "./data/final/"
+  name: "final_output"
+  extension: "json"
