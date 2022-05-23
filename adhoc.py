@@ -12,10 +12,6 @@ if __name__ == '__main__':
 
     pubmed = pandas.json_normalize(data, record_path=['pubmed'], meta=["drug"])
     clinical_trials = pandas.json_normalize(data, record_path=['clinical_trials'], meta=["drug"])
-
-    print(pubmed)
-    print(clinical_trials)
-
     result = pandas.concat([pubmed, clinical_trials])
     result = result[["journal", "drug"]].drop_duplicates().groupby("journal", as_index=False).count()
     result["max_nb_drug"] = int(result.max().get("drug"))
