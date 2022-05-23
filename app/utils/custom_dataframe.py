@@ -43,7 +43,7 @@ class CustomDataFrame:
             dataframe.to_csv(path, index=False)
             CustomDataFrame.logger.info(f"File [{path}] created, in CSV")
         elif file_name.endswith(".json"):
-            dataframe.to_json(path, orient="records")
+            dataframe.to_json(path, orient="records", indent=2)
             CustomDataFrame.logger.info(f"File [{path}] created, in JSON")
         else:
             raise TTSException(f"Extension is not recognise as a valid extension.")

@@ -4,7 +4,6 @@
 Le code développé prend en compte quatre phases. Deux de ces quatre phases embarquent les deux autres. On se retrouve donc avec une première phase d’ingestion / normalisation, qui va récupérer la donné. Pour récupérer cette donnée, il va lire le fichier `config/config.yml` et intégré data par data un nombre de fichier défini dans le fichier de configuration en fonction des données disponible. Une fois qu’il a intégré tous les fichiers, il va pouvoir passer a la phase de normalisation, ou il va colonne par colonne faire les actions définit pour normaliser ces données. Une fois que ces deux phases sont faites, les données vont être sauvegardée en tant que fichiers pour être réutilisée dans les phase suivante. La phase de computing va suivre, en fonction de la donnée on va effectuer des calculs qui vont nous permettre de récupérer a la fin le dataset qui nous conviens. On terminera avec la quatrième phase qui elle va tout simplement ecrire la donnée en fonction des options mi dans le fichier de configuration.
 
 ### Lancement
-
 1. Créer son environement virtuel
     ```bash
     python3 -m venv env
@@ -20,7 +19,8 @@ Le code développé prend en compte quatre phases. Deux de ces quatre phases emb
     ```bash
     python3 app.py
     ```
-
+   
+4. Le fichier de sortie sera disponible dans le fichier configuré dans le fichier de configuration, par defaut : `data/final/final_output.json`
 
 ## 2. Traitement ad-hoc
 

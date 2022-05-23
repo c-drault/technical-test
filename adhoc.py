@@ -1,16 +1,25 @@
 from app.utils.custom_dataframe import CustomDataFrame
-from pandas import Series
 import yaml
+import json
+import pandas
 
 if __name__ == '__main__':
     with open("config/config.yml") as conf_file:
         conf = yaml.load(conf_file, Loader=yaml.FullLoader)
 
-    dataframe = CustomDataFrame.create_df_from_file(
-        conf["export"]["path"] + conf["export"]["name"] + "." + conf["export"]["extension"], "json")
+    with open(conf["export"]["path"] + conf["export"]["name"] + "." + conf["export"]["extension"]) as data_file:
+        data = json.load(data_file)
 
-    dataframe = dataframe[["drug", "journal"]].drop_duplicates().groupby("journal").count()
-    dataframe["max_drug"] = int(dataframe.max().get("drug"))
-    dataframe = dataframe[(dataframe.drug == dataframe.max_drug)]
+    pubmed = pandas.json_normalize(data, record_path=['pubmed'], meta=["drug"])
+    clinical_trials = pandas.json_normalize(data, record_path=['clinical_trials'], meta=["drug"])
 
-    print(dataframe.arr)
+    print(pubmed)
+    print(clinical_trials)
+
+    result = pandas.concat([pubmed, clinical_trials])
+    result = result[["journal", "drug"]].drop_duplicates().groupby("journal", as_index=False).count()
+    result["max_nb_drug"] = int(result.max().get("drug"))
+    result = result[(result["drug"] == result["max_nb_drug"])]
+    resultat = result["journal"]
+    for index, value in resultat.items():
+        print(f"'{value}' est un des {len(resultat)} 'journals' qui fait référence au plus de 'drugs'.")
